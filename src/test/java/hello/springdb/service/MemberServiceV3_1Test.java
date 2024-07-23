@@ -36,7 +36,8 @@ class MemberServiceV3_1Test {
         DriverManagerDataSource dataSource = new DriverManagerDataSource(URL, USERNAME, PASSWORD);
         memberRepository = new MemberRepositoryV3(dataSource);
 
-        PlatformTransactionManager transactionManager = new DataSourceTransactionManager();
+        // Connection을 넣어주기 위한 DataSource를 넣어주어야 함
+        PlatformTransactionManager transactionManager = new DataSourceTransactionManager(dataSource);
         memberService = new MemberServiceV3_1(transactionManager, memberRepository);
     }
 
