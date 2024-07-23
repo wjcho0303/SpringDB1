@@ -3,6 +3,7 @@ package hello.springdb.repository;
 import hello.springdb.domain.Member;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.jdbc.support.JdbcUtils;
 
 import javax.sql.DataSource;
@@ -172,7 +173,8 @@ public class MemberRepositoryV3 {
     }
 
     private Connection getConnection() throws SQLException {
-        Connection conn = dataSource.getConnection();
+        // 트랜잭션 동기화를 사용하려면 DataSourceUtils를 사용해야 한다.
+        Connection conn = DataSourceUtils.getConnection(dataSource);
         log.info("get connection = {}, class = {}", conn, conn.getClass());
         return conn;
     }
