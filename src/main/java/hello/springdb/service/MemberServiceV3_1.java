@@ -4,19 +4,19 @@ import hello.springdb.domain.Member;
 import hello.springdb.repository.MemberRepositoryV2;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.PlatformTransactionManager;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
- * 트랜잭션 - 파라미터 연동, Pool을 고려한 종료
+ * 트랜잭션 - 트랜잭션 매니저
  */
 @RequiredArgsConstructor
 @Slf4j
 public class MemberServiceV3_1 {
 
-    private final DataSource dataSource;
+    private final PlatformTransactionManager transactionManager;
     private final MemberRepositoryV2 memberRepository;
 
     public void accountTransfer(String fromId, String toId, int money) throws SQLException {
