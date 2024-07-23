@@ -35,6 +35,7 @@ class MemberServiceV3_1Test {
     void before() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource(URL, USERNAME, PASSWORD);
         memberRepository = new MemberRepositoryV3(dataSource);
+
         PlatformTransactionManager transactionManager = new DataSourceTransactionManager();
         memberService = new MemberServiceV3_1(transactionManager, memberRepository);
     }
