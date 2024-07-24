@@ -26,17 +26,14 @@ public class MemberServiceV3_2 {
     }
 
     public void accountTransfer(String fromId, String toId, int money) throws SQLException {
-
-        // 트랜잭션 시작
-        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
-
-        try {
-            accountTransferBizLogic(toId, money, fromId);
-            transactionManager.commit(status);
-        } catch (Exception e) {
-            transactionManager.rollback(status);
-            throw new IllegalStateException(e);
-        }
+        txTemplate.executeWithoutResult((status) -> {
+            // 비즈니스 로직
+            try {
+                accountTransferBizLogic(toId, money, fromId);
+            } catch (SQLException e) {
+                throw new IllegalStateException(e);
+            }
+        });
     }
 
     private void accountTransferBizLogic(String toId, int money, String fromId) throws SQLException {
