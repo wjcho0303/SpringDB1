@@ -3,10 +3,12 @@ package hello.springdb.service;
 import hello.springdb.domain.Member;
 import hello.springdb.repository.MemberRepositoryV3;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -19,6 +21,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 import static hello.springdb.connection.ConnectionConstant.*;
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -66,6 +69,15 @@ class MemberServiceV3_3Test {
         memberRepository.delete(MEMBER_A);
         memberRepository.delete(MEMBER_B);
         memberRepository.delete(MEMBER_EX);
+    }
+
+    @Test
+    @DisplayName("프록시 확인용 테스트")
+    void aopCheck() {
+        log.info("memberService class = {}", memberService.getClass());
+        log.info("memberRepository class = {}", memberRepository.getClass());
+        assertThat(AopUtils.isAopProxy(memberService)).isTrue();
+        assertThat(AopUtils.isAopProxy(memberRepository)).isFalse();
     }
 
     @Test
