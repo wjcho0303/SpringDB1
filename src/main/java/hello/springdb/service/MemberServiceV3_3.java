@@ -11,6 +11,7 @@ import java.sql.SQLException;
  * 트랜잭션 - @Transactional을 이용한 AOP 적용
  */
 @Slf4j
+@Transactional
 public class MemberServiceV3_3 {
 
     private final MemberRepositoryV3 memberRepository;
@@ -19,7 +20,6 @@ public class MemberServiceV3_3 {
         this.memberRepository = memberRepository;
     }
 
-    @Transactional
     public void accountTransfer(String fromId, String toId, int money) throws SQLException {
         accountTransferBizLogic(toId, money, fromId);
     }
