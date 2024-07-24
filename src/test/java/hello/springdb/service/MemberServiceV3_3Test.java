@@ -7,9 +7,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.transaction.PlatformTransactionManager;
 
 import java.sql.SQLException;
 
@@ -18,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
- * 트랜잭션 - 트랜잭션 템플릿
+ * 트랜잭션 - @
  */
 @Slf4j
 class MemberServiceV3_3Test {
@@ -27,16 +25,13 @@ class MemberServiceV3_3Test {
     public static final String MEMBER_EX = "ex";
 
     private MemberRepositoryV3 memberRepository;
-    private MemberServiceV3_2 memberService;
+    private MemberServiceV3_3 memberService;
 
     @BeforeEach
     void before() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource(URL, USERNAME, PASSWORD);
         memberRepository = new MemberRepositoryV3(dataSource);
-
-        // Connection을 넣어주기 위한 DataSource를 넣어주어야 함
-        PlatformTransactionManager transactionManager = new DataSourceTransactionManager(dataSource);
-        memberService = new MemberServiceV3_2(transactionManager, memberRepository);
+        memberService = new MemberServiceV3_3(memberRepository);
     }
 
     @AfterEach
