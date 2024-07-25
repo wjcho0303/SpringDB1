@@ -1,7 +1,8 @@
 package hello.springdb.service;
 
 import hello.springdb.domain.Member;
-import hello.springdb.repository.MemberRepositoryV3;
+import hello.springdb.repository.MemberRepository;
+import hello.springdb.repository.MemberRepositoryV4_1;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,7 +20,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
- * 트랜잭션 - DataSource, TransactionManager 자동 등록
+ * 예외 누수 문제 해결
+ * SQLException 제거
+ * MemberRepository 인터페이스에 의존
  */
 @Slf4j
 @SpringBootTest
@@ -29,29 +32,24 @@ class MemberServiceV4Test {
     public static final String MEMBER_EX = "ex";
 
     @Autowired
-    private MemberRepositoryV3 memberRepository;
+    private MemberRepository memberRepository;
 
     @Autowired
-    private MemberServiceV3_3 memberService;
+    private MemberServiceV4 memberService;
 
     @TestConfiguration
     static class TestConfig {
 
         @Autowired private DataSource dataSource;
-//        private final DataSource dataSource;
-//
-//        public TestConfig(DataSource dataSource) {
-//            this.dataSource = dataSource;
-//        }
 
         @Bean
-        MemberRepositoryV3 memberRepositoryV3() {
-            return new MemberRepositoryV3(dataSource);
+        MemberRepository memberRepository() {
+            return new MemberRepositoryV4_1(dataSource);
         }
 
         @Bean
-        MemberServiceV3_3 memberServiceV3_3() {
-            return new MemberServiceV3_3((memberRepositoryV3()));
+        MemberServiceV4 memberServiceV4() {
+            return new MemberServiceV4((memberRepository()));
         }
     }
 
