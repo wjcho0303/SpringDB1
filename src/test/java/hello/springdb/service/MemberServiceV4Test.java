@@ -54,7 +54,7 @@ class MemberServiceV4Test {
     }
 
     @AfterEach
-    void after() throws SQLException {
+    void after() {
         memberRepository.delete(MEMBER_A);
         memberRepository.delete(MEMBER_B);
         memberRepository.delete(MEMBER_EX);
@@ -71,7 +71,7 @@ class MemberServiceV4Test {
 
     @Test
     @DisplayName("정상 이체")
-    void accountTransfer() throws SQLException {
+    void accountTransfer() {
         // given (준비된 데이터)
         Member memberA = new Member(MEMBER_A, 10000);
         Member memberB = new Member(MEMBER_B, 10000);
@@ -92,7 +92,7 @@ class MemberServiceV4Test {
 
     @Test
     @DisplayName("이체 중 예외 발생")
-    void accountTransferEx() throws SQLException {
+    void accountTransferEx() {
         // given (준비된 데이터)
         Member memberA = new Member(MEMBER_A, 10000);
         Member memberEx = new Member(MEMBER_EX, 10000);
