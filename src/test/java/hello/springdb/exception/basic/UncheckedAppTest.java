@@ -15,6 +15,13 @@ public class UncheckedAppTest {
                 .isInstanceOf(SQLException.class);
     }
 
+    @Test
+    void unchecked() {
+        Controller controller = new Controller();
+        Assertions.assertThatThrownBy(() -> controller.request())
+                .isInstanceOf(RuntimeSQLException.class);
+    }
+
     static class Controller {
         Service service = new Service();
 
