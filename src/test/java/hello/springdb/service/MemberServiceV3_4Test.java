@@ -41,11 +41,12 @@ class MemberServiceV3_4Test {
     @TestConfiguration
     static class TestConfig {
 
-        private final DataSource dataSource;
-
-        public TestConfig(DataSource dataSource) {
-            this.dataSource = dataSource;
-        }
+        @Autowired private DataSource dataSource;
+//        private final DataSource dataSource;
+//
+//        public TestConfig(DataSource dataSource) {
+//            this.dataSource = dataSource;
+//        }
 
         @Bean
         MemberRepositoryV3 memberRepositoryV3() {
