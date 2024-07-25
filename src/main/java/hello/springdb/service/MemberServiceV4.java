@@ -22,11 +22,11 @@ public class MemberServiceV4 {
         this.memberRepository = memberRepository;
     }
 
-    public void accountTransfer(String fromId, String toId, int money) throws SQLException {
+    public void accountTransfer(String fromId, String toId, int money) {
         accountTransferBizLogic(toId, money, fromId);
     }
 
-    private void accountTransferBizLogic(String toId, int money, String fromId) throws SQLException {
+    private void accountTransferBizLogic(String toId, int money, String fromId) {
         Member fromMember = memberRepository.findById(fromId);
         Member toMember = memberRepository.findById(toId);
 
