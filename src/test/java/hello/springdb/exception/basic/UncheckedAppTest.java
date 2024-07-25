@@ -27,20 +27,30 @@ public class UncheckedAppTest {
         Repository repository = new Repository();
         NetworkClient networkClient = new NetworkClient();
 
-        public void logic() throws SQLException, ConnectException {
+        public void logic() {
             repository.callRepository();
             networkClient.callNetworkClient();
         }
     }
 
     static class NetworkClient {
-        public void callNetworkClient() throws ConnectException {
-            throw new ConnectException("연결 실패");
+        public void callNetworkClient() {
+            throw new RuntimeConnectException("연결 실패");
         }
     }
 
     static class Repository {
-        public void callRepository() throws SQLException {
+        // 체크 예외를 잡아서 런타임 예외로 변환시켜 던지기
+        public void callRepository() {
+            try {
+                runSQL();
+            } catch (SQLException e) {
+                throw new RuntimeSQLException(e);
+            }
+        }
+
+        // 체크 예외
+        public void runSQL() throws SQLException {
             throw new SQLException("ex");
         }
     }
@@ -52,8 +62,8 @@ public class UncheckedAppTest {
     }
 
     static class RuntimeSQLException extends RuntimeException {
-        public RuntimeSQLException(String message) {
-            super(message);
+        public RuntimeSQLException(Throwable cause) {
+            super(cause);
         }
     }
 }
