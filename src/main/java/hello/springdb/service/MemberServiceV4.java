@@ -1,22 +1,24 @@
 package hello.springdb.service;
 
 import hello.springdb.domain.Member;
-import hello.springdb.repository.MemberRepositoryV3;
+import hello.springdb.repository.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
 
 /**
- * 트랜잭션 - @Transactional을 이용한 AOP 적용
+ * 예외 누수 문제 해결
+ * SQLException 제거
+ * MemberRepository 인터페이스에 의존
  */
 @Slf4j
 @Transactional
 public class MemberServiceV4 {
 
-    private final MemberRepositoryV3 memberRepository;
+    private final MemberRepository memberRepository;
 
-    public MemberServiceV4(MemberRepositoryV3 memberRepository) {
+    public MemberServiceV4(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
 
