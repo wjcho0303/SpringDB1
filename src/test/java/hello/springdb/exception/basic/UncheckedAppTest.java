@@ -18,7 +18,7 @@ public class UncheckedAppTest {
     static class Controller {
         Service service = new Service();
 
-        public void request() throws SQLException, ConnectException {
+        public void request() {
             service.logic();
         }
     }
