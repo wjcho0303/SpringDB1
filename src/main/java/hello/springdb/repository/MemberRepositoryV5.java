@@ -51,23 +51,8 @@ public class MemberRepositoryV5 implements MemberRepository {
     @Override
     public void update(String memberId, int money) {
         String sql = "update member set money = ? where member_id = ?";
+        jdbcTemplate.update(sql, money, memberId);
 
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-
-        try {
-            conn = getConnection();
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, money);
-            pstmt.setString(2, memberId);
-
-            int resultSize = pstmt.executeUpdate();
-            log.info("resultSize = {}", resultSize);
-        } catch (SQLException e) {
-            throw exTranslator.translate("update", sql, e);
-        } finally {
-            close(conn, pstmt, null);
-        }
     }
 
     @Override
