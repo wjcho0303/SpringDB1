@@ -27,22 +27,8 @@ public class MemberRepositoryV5 implements MemberRepository {
     @Override
     public Member save(Member member) {
         String sql = "insert into member(member_id, money) values (?, ?)";
-
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-
-        try {
-            conn = getConnection();
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, member.getMemberId());
-            pstmt.setInt(2, member.getMoney());
-            pstmt.executeUpdate();
-            return member;
-        } catch (SQLException e) {
-            throw exTranslator.translate("save", sql, e);
-        } finally {
-            close(conn, pstmt, null);
-        }
+        jdbcTemplate.update(sql, member.getMemberId(), member.getMoney());
+        return member;
     }
 
     @Override
