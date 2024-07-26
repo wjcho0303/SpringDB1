@@ -46,7 +46,6 @@ public class MemberRepositoryV5 implements MemberRepository {
     public void update(String memberId, int money) {
         String sql = "update member set money = ? where member_id = ?";
         jdbcTemplate.update(sql, money, memberId);
-
     }
 
     @Override
