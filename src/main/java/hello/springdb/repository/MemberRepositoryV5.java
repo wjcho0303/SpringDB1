@@ -58,33 +58,6 @@ public class MemberRepositoryV5 implements MemberRepository {
     @Override
     public void delete(String memberId) {
         String sql = "delete from member where member_id = ?";
-
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-
-        try {
-            conn = getConnection();
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, memberId);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            throw exTranslator.translate("delete", sql, e);
-        } finally {
-            close(conn, pstmt, null);
-        }
-    }
-
-    private void close(Connection conn, Statement stmt, ResultSet rs) {
-        JdbcUtils.closeResultSet(rs);
-        JdbcUtils.closeStatement(stmt);
-        // 트랜잭션 동기화를 사용하려면 DataSourceUtils를 사용해야 한다.
-        DataSourceUtils.releaseConnection(conn, dataSource);
-    }
-
-    private Connection getConnection() throws SQLException {
-        // 트랜잭션 동기화를 사용하려면 DataSourceUtils를 사용해야 한다.
-        Connection conn = DataSourceUtils.getConnection(dataSource);
-        log.info("get connection = {}, class = {}", conn, conn.getClass());
-        return conn;
+        jdbcTemplate.update(sql, memberId);
     }
 }
