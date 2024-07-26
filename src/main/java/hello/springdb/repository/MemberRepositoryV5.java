@@ -2,6 +2,7 @@ package hello.springdb.repository;
 
 import hello.springdb.domain.Member;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.jdbc.support.JdbcUtils;
 import org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator;
@@ -12,17 +13,15 @@ import java.sql.*;
 import java.util.NoSuchElementException;
 
 /**
- * SQLExceptionTranslator 도입하기
+ * JdbcTemplate 사용
  */
 @Slf4j
 public class MemberRepositoryV5 implements MemberRepository {
 
-    private final DataSource dataSource;
-    private final SQLExceptionTranslator exTranslator;
+    private final JdbcTemplate jdbcTemplate;
 
     public MemberRepositoryV5(DataSource dataSource) {
-        this.dataSource = dataSource;
-        this.exTranslator = new SQLErrorCodeSQLExceptionTranslator(dataSource);
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     @Override
