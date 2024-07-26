@@ -3,6 +3,7 @@ package hello.springdb.service;
 import hello.springdb.domain.Member;
 import hello.springdb.repository.MemberRepository;
 import hello.springdb.repository.MemberRepositoryV4_1;
+import hello.springdb.repository.MemberRepositoryV4_2;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -43,7 +44,7 @@ class MemberServiceV4Test {
 
         @Bean
         MemberRepository memberRepository() {
-            return new MemberRepositoryV4_1(dataSource);
+            return new MemberRepositoryV4_2(dataSource);
         }
 
         @Bean
